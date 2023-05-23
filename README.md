@@ -1,0 +1,1 @@
+Boilerplate code for LivePublication Action Providers

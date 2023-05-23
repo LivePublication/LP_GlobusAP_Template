@@ -1,0 +1,3 @@
+[console_scripts]
+whattimeisit-provider=examples.flask.whattimeisitrightnow.app.app:main
+
