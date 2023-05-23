@@ -1,0 +1,3 @@
+[console_scripts]
+rocrate = rocrate.cli:cli
+

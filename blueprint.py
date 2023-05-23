@@ -3,6 +3,7 @@ from typing import Dict, List, Set
 
 from flask import request
 from pydantic import BaseModel, Field
+from rocrate.rocrate import ROCrate
 
 import sys
 
@@ -158,8 +159,13 @@ def my_action_run(action_request: ActionRequest, auth: AuthState) -> ActionCallb
     return action_status
 
 def run_computation(action_id: str, request_body):
+    manage_crate()
     pass
 
+def manage_crate():
+    # crate = ROCrate
+    # crate.write("example-crate")
+    pass
 
 @aptb.action_status
 def my_action_status(action_id: str, auth: AuthState) -> ActionCallbackReturn:

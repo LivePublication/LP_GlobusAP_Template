@@ -1,0 +1,3 @@
+[console_scripts]
+galaxy2cwl = galaxy2cwl.get_cwl_interface:main
+
