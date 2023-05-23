@@ -117,8 +117,7 @@ def my_action_run(action_request: ActionRequest, auth: AuthState) -> ActionCallb
 
     # Regester action request to parse out continuing requests
     caller_id = auth.effective_identity
-    prefix_to_process = action_request.body['prefix']
-    full_request_id = f"{caller_id}:{prefix_to_process}"
+    full_request_id = f"{caller_id}:{action_request.request_id}"
     prev_request = request_database.get(full_request_id)
 
     if prev_request is not None:
@@ -153,7 +152,8 @@ def my_action_run(action_request: ActionRequest, auth: AuthState) -> ActionCallb
     # update request_database with unique request ID
     request_database[full_request_id] = (request, action_status.action_id)
 
-    run_computation(action_status.action_id, action_request.body) # Testing logic
+    # Example logic for running an action
+    run_computation(action_status.action_id, action_request.body) 
 
     return action_status
 
