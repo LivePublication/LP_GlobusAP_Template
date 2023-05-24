@@ -1,0 +1,3 @@
+[console_scripts]
+globus-automate=globus_automate_client.cli.main:app
+

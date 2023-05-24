@@ -7,6 +7,10 @@ from rocrate.rocrate import ROCrate
 
 import sys
 
+import gladier
+import globus_transfer
+import pprint
+
 from globus_action_provider_tools import (
     ActionProviderDescription,
     ActionRequest,
@@ -46,19 +50,20 @@ description = ActionProviderDescription(
     admin_contact="",
     synchronous=True,
     input_schema=ActionProviderInput,
-    api_version="",
+    api_version="1.0",
     subtitle="",
     description="",
     keywords=[""],
-    visible_to=[""],
-    runnable_by=[""],
+    visible_to=["public"],
+    runnable_by=["all_authenticated"],
     administered_by=[""],
 )
 
 aptb = ActionProviderBlueprint(
-    name="cc",
+    # Fill out name & prefix
+    name="",
     import_name=__name__,
-    url_prefix="/cc",
+    url_prefix="",
     provider_description=description
 )
 
@@ -166,6 +171,31 @@ def manage_crate():
     # crate = ROCrate
     # crate.write("example-crate")
     pass
+
+def transfer_crate():
+    generate_flow_definition = gladier.generate_flow_definition
+    GladierBaseClient = gladier.GladierBaseClient
+
+    @generate_flow_definition
+    class Transfer(GladierBaseClient):
+        gladier_tools = [
+            'globus_transfer.Transfer'
+        ]
+    flow_input = {
+        'input': {
+            'transfer_source_endpoint_id': SOURCE_ENDPOINT_ID,
+            'transfer_destination_endpoint_id': DEST_ENDPOINT_ID,
+            'transfer_source_path': "",
+            'transfer_destination_path': "",
+            'transfer_recursive': True,
+        }
+    }
+
+    transfer = Transfer()
+    flow = transfer.run_flow(flow_input=flow_input)
+    action_id = flow['action_id']
+    transfer.progress(action_id)
+    pprint(transfer.get_status(action_id))
 
 @aptb.action_status
 def my_action_status(action_id: str, auth: AuthState) -> ActionCallbackReturn:
