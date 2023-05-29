@@ -1,0 +1,16 @@
+{
+  "scope": {
+      "name": "Action Provider Operations",
+      "description": "All Operations on My Action Provider",
+      "scope_suffix": "action_all",
+      "dependent_scopes": [
+        {
+          "optional": false,
+          "requires_refresh_token": true,
+          "scope": "73320ffe-4cb4-4b25-a0a3-83d53d59ce4f"
+       }
+      ],
+      "advertised": false,
+      "allow_refresh_tokens": true
+  }
+}

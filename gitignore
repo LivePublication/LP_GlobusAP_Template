@@ -37,9 +37,9 @@
 ehthumbs.db
 Thumbs.db
 
-#    venv packages   #
+#     Venv env       # 
 ######################
-venv/
+/venv/
 
 #      Py cache      #
 ######################

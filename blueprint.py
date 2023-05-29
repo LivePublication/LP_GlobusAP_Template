@@ -3,13 +3,10 @@ from typing import Dict, List, Set
 
 from flask import request
 from pydantic import BaseModel, Field
-from rocrate.rocrate import ROCrate
 
 import sys
 
-import gladier
-import globus_transfer
-import pprint
+from lp_tools import LP_artefact
 
 from globus_action_provider_tools import (
     ActionProviderDescription,
@@ -45,7 +42,7 @@ class ActionProviderInput(BaseModel):
 
 # Configure 
 description = ActionProviderDescription(
-    globus_auth_scope="",
+    globus_auth_scope="https://auth.globus.org/scopes/15ee699b-35f4-42e5-b69f-a4ab232f4a67/action_all",
     title="",
     admin_contact="",
     synchronous=True,
@@ -61,9 +58,9 @@ description = ActionProviderDescription(
 
 aptb = ActionProviderBlueprint(
     # Fill out name & prefix
-    name="",
+    name="temp_name",
     import_name=__name__,
-    url_prefix="",
+    url_prefix="/example",
     provider_description=description
 )
 
@@ -159,43 +156,15 @@ def my_action_run(action_request: ActionRequest, auth: AuthState) -> ActionCallb
     request_database[full_request_id] = (request, action_status.action_id)
 
     # Example logic for running an action
-    run_computation(action_status.action_id, action_request.body) 
+    # run_computation(action_status.action_id, action_request.body) 
+    run_computation()
 
     return action_status
 
-def run_computation(action_id: str, request_body):
-    manage_crate()
+@LP_artefact
+def run_computation():
     pass
 
-def manage_crate():
-    # crate = ROCrate
-    # crate.write("example-crate")
-    pass
-
-def transfer_crate():
-    generate_flow_definition = gladier.generate_flow_definition
-    GladierBaseClient = gladier.GladierBaseClient
-
-    @generate_flow_definition
-    class Transfer(GladierBaseClient):
-        gladier_tools = [
-            'globus_transfer.Transfer'
-        ]
-    flow_input = {
-        'input': {
-            'transfer_source_endpoint_id': SOURCE_ENDPOINT_ID,
-            'transfer_destination_endpoint_id': DEST_ENDPOINT_ID,
-            'transfer_source_path': "",
-            'transfer_destination_path': "",
-            'transfer_recursive': True,
-        }
-    }
-
-    transfer = Transfer()
-    flow = transfer.run_flow(flow_input=flow_input)
-    action_id = flow['action_id']
-    transfer.progress(action_id)
-    pprint(transfer.get_status(action_id))
 
 @aptb.action_status
 def my_action_status(action_id: str, auth: AuthState) -> ActionCallbackReturn:
@@ -277,3 +246,7 @@ def my_action_log(action_id: str, auth: AuthState) -> ActionLogReturn:
             },
         },
     )
+
+
+if __name__ == "__main__":
+    run_computation()
