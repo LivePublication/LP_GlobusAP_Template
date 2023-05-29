@@ -4,7 +4,7 @@ from globus_action_provider_tools import ActionStatus
 from globus_action_provider_tools.data_types import ActionRequest
 from globus_action_provider_tools.storage import AbstractActionRepository
 
-action_database: Dict[str, ActionStatus] = {}
+action_database: Dict[str, Tuple[ActionStatus, str]] = {}
 request_database: Dict[str, Tuple[ActionRequest, str]] = {}
 
 class ActionRepo(AbstractActionRepository):

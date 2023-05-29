@@ -4,9 +4,11 @@ from typing import Dict, List, Set
 from flask import request
 from pydantic import BaseModel, Field
 
+import os
 import sys
 
-from lp_tools import LP_artefact
+from lp_ap_tools.lp_ap_tools import LP_artefact
+# from lp_tools import LP_artefact
 
 from globus_action_provider_tools import (
     ActionProviderDescription,
@@ -28,21 +30,29 @@ from globus_action_provider_tools.flask.types import (
 
 from backend import action_database, request_database
 
+# Globals for directory locations 
+CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
+INPUT_DIR = os.path.join(CURRENT_DIR, 'input') # AP inputs for method execution
+OUTPUT_DIR = os.path.join(CURRENT_DIR, 'output') # Generated outputs
+METHOD_DIR = os.path.join(CURRENT_DIR, 'method_resources') # Resources for method execution (e.g. Model, code, etc.)
+CRATES_DIR = os.path.join(CURRENT_DIR, 'crates') # ROcrate location for each action
+directory_structure = {"input": INPUT_DIR, "output": OUTPUT_DIR, "method": METHOD_DIR, "crates": CRATES_DIR}
+
 class ActionProviderInput(BaseModel):
     # Defines the required input for the Action Provider (E.G. directories to process)
-    example_var1: str = Field(
+    example: str = Field(
         ..., title="Some required input", description="A useful description"
     )
 
     # Defines the returned dialog when querying the Action Provider
     class Config:
         schema_extra = {"example": {
-            "example_var1": "an example of the variable"
+            "example": "an example of the variable"
             }}
 
 # Configure 
 description = ActionProviderDescription(
-    globus_auth_scope="https://auth.globus.org/scopes/15ee699b-35f4-42e5-b69f-a4ab232f4a67/action_all",
+    globus_auth_scope="https://auth.globus.org/scopes/b92716c9-3ac2-4315-8f48-c33148efed20/action_all",
     title="",
     admin_contact="",
     synchronous=True,
@@ -52,13 +62,13 @@ description = ActionProviderDescription(
     description="",
     keywords=[""],
     visible_to=["public"],
-    runnable_by=["all_authenticated"],
+    runnable_by=["all_authenticated_users"],
     administered_by=[""],
 )
 
 aptb = ActionProviderBlueprint(
     # Fill out name & prefix
-    name="temp_name",
+    name="example",
     import_name=__name__,
     url_prefix="/example",
     provider_description=description
@@ -82,6 +92,7 @@ def action_enumeration(auth: AuthState, params: Dict[str, Set]) -> List[ActionSt
 
     Notice that the value for the "statuses" key is an Enum value.
     """
+    # TODO - may not work with changes to backend.py
     statuses = params["statuses"]
     roles = params["roles"]
     matches = []
@@ -126,10 +137,9 @@ def my_action_run(action_request: ActionRequest, auth: AuthState) -> ActionCallb
     if prev_request is not None:
         """
         NOTE: This is needed because the Globus client sends multiple
-        post requests to the server when starting an action (is this 
-        for redundency?, traffic issues?). This stops further requests
-        once a unique action is logged, and returns the status of the 
-        currently logged request.
+        post requests to the server when starting an action. This stops 
+        further requests once a unique action is logged, and returns 
+        the status of the currently logged request.
         """
         if prev_request[0] == request:
             return my_action_status(prev_request[1], auth)
@@ -151,18 +161,19 @@ def my_action_run(action_request: ActionRequest, auth: AuthState) -> ActionCallb
         details={},
     )
     # Update action_database with action object
-    action_database[action_status.action_id] = action_status
+    action_database[action_status.action_id] = (action_status, f"crate_{action_status.action_id}")
     # update request_database with unique request ID
     request_database[full_request_id] = (request, action_status.action_id)
 
     # Example logic for running an action
-    # run_computation(action_status.action_id, action_request.body) 
-    run_computation()
+    run_computation(action_status.action_id, action_request.body) 
 
     return action_status
 
-@LP_artefact
-def run_computation():
+@LP_artefact(dir_struct=directory_structure)
+def run_computation(action_id: str, body):
+    print(action_database.get(action_id))
+    # TODO - strongly define body type
     pass
 
 
@@ -250,3 +261,7 @@ def my_action_log(action_id: str, auth: AuthState) -> ActionLogReturn:
 
 if __name__ == "__main__":
     run_computation()
+    print(INPUT_DIR)
+    print(OUTPUT_DIR)
+    print(METHOD_DIR)
+    print(CRATES_DIR)

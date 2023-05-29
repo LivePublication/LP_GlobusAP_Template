@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: lp-ap-tools
+Version: 0.1.0
+Summary: A python decorator for creating ActionProvider RO-crates within a Globus flow
+Home-page: https://github.com/GusEllerm/lp_tools.git
+Author: Augustus Ellerm
+License: MIT
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Dist: rocrate
+
+UNKNOWN
+
