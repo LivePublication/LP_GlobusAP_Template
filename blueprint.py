@@ -265,9 +265,6 @@ def my_action_log(action_id: str, auth: AuthState) -> ActionLogReturn:
     )
 
 
-if __name__ == "__main__":
-    run_computation()
-    print(INPUT_DIR)
-    print(OUTPUT_DIR)
-    print(METHOD_DIR)
-    print(CRATES_DIR)
+# Testing
+# if __name__ == "__main__":
+#     run_computation()
