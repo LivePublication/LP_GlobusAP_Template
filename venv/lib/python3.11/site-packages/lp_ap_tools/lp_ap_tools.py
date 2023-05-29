@@ -2,8 +2,20 @@ import functools
 import time
 import os
 from rocrate.rocrate import ROCrate
+from pydantic import Field, BaseModel, create_model # include pydantic in new tooling
 
+# LP fields to be included within AP input_schema
+# TODO: Build schema, and provide flexibility in chosen fields. 
+LP_FIELDS = {
+   'context_description': (str, Field(..., title="Some required input", description="A useful description")),
+   'researcher_comment': (str, Field(..., title="Some required input", description="A useful description")),
+}
 
+def union_fields(origin_class: BaseModel, LP_fields):
+   original_fields = {name: (field.outer_type_, field.field_info) for name, field in origin_class.__fields__.items()}
+   return create_model(type(origin_class).__name__, **{**original_fields, **LP_FIELDS})
+
+# Decorator for creating LP RO-Crates
 def LP_artefact(dir_struct: dict,
                 description: str = "description",
                 creator: str = "creator"):

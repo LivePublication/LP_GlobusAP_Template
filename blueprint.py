@@ -7,8 +7,7 @@ from pydantic import BaseModel, Field
 import os
 import sys
 
-from lp_ap_tools.lp_ap_tools import LP_artefact
-# from lp_tools import LP_artefact
+from lp_ap_tools.lp_ap_tools import LP_artefact, LP_FIELDS, union_fields
 
 from globus_action_provider_tools import (
     ActionProviderDescription,
@@ -43,12 +42,19 @@ class ActionProviderInput(BaseModel):
     example: str = Field(
         ..., title="Some required input", description="A useful description"
     )
-
+    
     # Defines the returned dialog when querying the Action Provider
     class Config:
-        schema_extra = {"example": {
-            "example": "an example of the variable"
-            }}
+        schema_extra = {
+            "example": {
+                "example": "an example of the variable"
+                }
+            }
+
+# Using lp_ap_tools, we can add LP fields to the ActionProviderInput post-hoc, providing flexibility in the chosen fields.
+ActionProviderInput = union_fields(
+    ActionProviderInput,
+    LP_FIELDS)
 
 # Configure 
 description = ActionProviderDescription(
