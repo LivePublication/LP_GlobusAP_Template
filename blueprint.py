@@ -100,7 +100,6 @@ def action_enumeration(auth: AuthState, params: Dict[str, Set]) -> List[ActionSt
 
     Notice that the value for the "statuses" key is an Enum value.
     """
-    # TODO - may not work with changes to backend.py
     statuses = params["statuses"]
     roles = params["roles"]
     matches = []
@@ -169,7 +168,7 @@ def my_action_run(action_request: ActionRequest, auth: AuthState) -> ActionCallb
         details={},
     )
     # Update action_database with action object
-    action_database[action_status.action_id] = (action_status, f"crate_{action_status.action_id}")
+    action_database[action_status.action_id] = action_status
     # update request_database with unique request ID
     request_database[full_request_id] = (request, action_status.action_id)
 
@@ -178,9 +177,9 @@ def my_action_run(action_request: ActionRequest, auth: AuthState) -> ActionCallb
 
     return action_status
 
-# @LP_artefact(dir_struct=directory_structure)
-def run_computation():
-    # print(action_database.get(action_id))
+@LP_artefact(dir_struct=directory_structure)
+def run_computation(action_id: str, body):
+    print(action_database.get(action_id))
     # TODO - strongly define body type
 
     client = docker.from_env()
@@ -190,13 +189,12 @@ def run_computation():
         OUTPUT_DIR: {'bind': '/computation/output', 'mode': 'rw'}
     }
 
+    print("launching container")
     container = client.containers.run(
         image='computation_template',
         volumes=volumes,
         detach=False
     )
-
-    # print(f"Container ID: {container.}")
 
 
 @aptb.action_status
@@ -282,5 +280,5 @@ def my_action_log(action_id: str, auth: AuthState) -> ActionLogReturn:
 
 
 # Testing
-if __name__ == "__main__":
-    run_computation()
+# if __name__ == "__main__":
+#     run_computation()
