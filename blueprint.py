@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 
 import os
 import sys
+import docker
 
 from lp_ap_tools.lp_ap_tools import LP_artefact, LP_FIELDS, union_fields
 
@@ -51,7 +52,8 @@ class ActionProviderInput(BaseModel):
                 }
             }
 
-# Using lp_ap_tools, we can add LP fields to the ActionProviderInput post-hoc, providing flexibility in the chosen fields.
+# Using lp_ap_tools, we can add LP fields to the ActionProviderInput 
+# post-hoc, providing flexibility in the chosen fields.
 ActionProviderInput = union_fields(
     ActionProviderInput,
     LP_FIELDS)
@@ -176,11 +178,25 @@ def my_action_run(action_request: ActionRequest, auth: AuthState) -> ActionCallb
 
     return action_status
 
-@LP_artefact(dir_struct=directory_structure)
-def run_computation(action_id: str, body):
-    print(action_database.get(action_id))
+# @LP_artefact(dir_struct=directory_structure)
+def run_computation():
+    # print(action_database.get(action_id))
     # TODO - strongly define body type
-    pass
+
+    client = docker.from_env()
+
+    volumes = {
+        INPUT_DIR: {'bind': '/computation/input', 'mode': 'rw'},
+        OUTPUT_DIR: {'bind': '/computation/output', 'mode': 'rw'}
+    }
+
+    container = client.containers.run(
+        image='computation_template',
+        volumes=volumes,
+        detach=False
+    )
+
+    # print(f"Container ID: {container.}")
 
 
 @aptb.action_status
@@ -266,5 +282,5 @@ def my_action_log(action_id: str, auth: AuthState) -> ActionLogReturn:
 
 
 # Testing
-# if __name__ == "__main__":
-#     run_computation()
+if __name__ == "__main__":
+    run_computation()

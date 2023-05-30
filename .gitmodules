@@ -1,0 +1,3 @@
+[submodule "method_resources/computation_docker"]
+	path = method_resources/computation_docker
+	url = https://github.com/GusEllerm/docker_computation_template.git
