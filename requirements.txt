@@ -58,7 +58,7 @@ rdflib==6.3.2
 requests==2.31.0
 requests-toolbelt==1.0.0
 rich==12.6.0
-rocrate==0.7.0
+rocrate @ git+https://github.com/ResearchObject/ro-crate-py@266aeba69f87855a041490105efd0ac90640d0e3
 ruamel.yaml==0.17.26
 ruamel.yaml.clib==0.2.7
 schema-salad==8.4.20230511084951
