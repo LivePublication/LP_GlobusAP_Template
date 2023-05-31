@@ -1,0 +1,62 @@
+{
+    "@context": "https://w3id.org/ro/crate/1.1/context",
+    "@graph": [
+        {
+            "@id": "./",
+            "@type": "Dataset",
+            "datePublished": "2023-05-31T14:58:37.958337",
+            "description": "LP artefact for action SgoziFIWLFRP",
+            "hasPart": [
+                {
+                    "@id": "input/"
+                },
+                {
+                    "@id": "output/"
+                }
+            ],
+            "name": "crate_SgoziFIWLFRP"
+        },
+        {
+            "@id": "ro-crate-metadata.json",
+            "@type": "CreativeWork",
+            "about": {
+                "@id": "./"
+            },
+            "conformsTo": {
+                "@id": "https://w3id.org/ro/crate/1.1"
+            }
+        },
+        {
+            "@id": "#25af9d3b-aeb8-4f44-9c88-3264ad82a3ae",
+            "@type": "Person",
+            "affiliation": "The University of Auckland",
+            "email": "ellermaugustus@gmail.com",
+            "name": "Gus Ellerm",
+            "username": "aell854@auckland.ac.nz"
+        },
+        {
+            "@id": "#SgoziFIWLFRP",
+            "@type": "SoftwareApplication",
+            "description": "An example ActionProvider that uses a container to copy a file from input to output",
+            "executed": {
+                "@id": "#25af9d3b-aeb8-4f44-9c88-3264ad82a3ae"
+            },
+            "input": {
+                "@id": "input/"
+            },
+            "name": "example",
+            "output": {
+                "@id": "output/"
+            },
+            "url": "http://localhost:8080/example/run"
+        },
+        {
+            "@id": "input/",
+            "@type": "Dataset"
+        },
+        {
+            "@id": "output/",
+            "@type": "Dataset"
+        }
+    ]
+}

@@ -8,7 +8,7 @@ import os
 import sys
 import docker
 
-from lp_ap_tools.lp_ap_tools import LP_artefact, LP_FIELDS, union_fields
+from lp_ap_tools.lp_ap_tools import LP_artefact, add_lp_params
 
 from globus_action_provider_tools import (
     ActionProviderDescription,
@@ -54,11 +54,9 @@ class ActionProviderInput(BaseModel):
 
 # Using lp_ap_tools, we can add LP fields to the ActionProviderInput 
 # post-hoc, providing flexibility in the chosen fields.
-ActionProviderInput = union_fields(
-    ActionProviderInput,
-    LP_FIELDS)
+ActionProviderInput = add_lp_params(ActionProviderInput)
 
-# Configure 
+# Configure Action Provider identity
 description = ActionProviderDescription(
     globus_auth_scope="https://auth.globus.org/scopes/b92716c9-3ac2-4315-8f48-c33148efed20/action_all",
     title="",
@@ -67,20 +65,24 @@ description = ActionProviderDescription(
     input_schema=ActionProviderInput,
     api_version="1.0",
     subtitle="",
-    description="",
+    description="An example ActionProvider that uses a container to copy a file from input to output",
     keywords=[""],
     visible_to=["public"],
     runnable_by=["all_authenticated_users"],
     administered_by=[""],
 )
 
+# Configure name, url and assign description
 aptb = ActionProviderBlueprint(
-    # Fill out name & prefix
     name="example",
     import_name=__name__,
     url_prefix="/example",
     provider_description=description
 )
+
+# ---------------------------------------------------------------------
+# --------------------- Action Provider endpoints ---------------------
+# ---------------------------------------------------------------------
 
 @aptb.action_enumerate
 def action_enumeration(auth: AuthState, params: Dict[str, Set]) -> List[ActionStatus]:
@@ -172,24 +174,40 @@ def my_action_run(action_request: ActionRequest, auth: AuthState) -> ActionCallb
     # update request_database with unique request ID
     request_database[full_request_id] = (request, action_status.action_id)
 
+    print(request_database[full_request_id])
+
     # Example logic for running an action
-    run_computation(action_status.action_id, action_request.body) 
+    run_computation(ap_description=description, 
+                    ap_request=action_request, 
+                    ap_status=action_status,
+                    ap_auth=auth,
+                    ap_apbt=aptb,
+                    raw_request=request_database[full_request_id]) 
 
     return action_status
 
+# LP artefact decorator for ROcrate management
 @LP_artefact(dir_struct=directory_structure)
-def run_computation(action_id: str, body):
-    print(action_database.get(action_id))
-    # TODO - strongly define body type
+def run_computation(ap_description: ActionProviderDescription, 
+                    ap_request: ActionRequest, 
+                    ap_status: ActionStatus,
+                    ap_auth: AuthState,
+                    ap_apbt: ActionProviderBlueprint,
+                    raw_request: request):
+    
+    # ----------------------------------------------
+    # ----------- docker containersation -----------
+    # ----------------------------------------------
 
     client = docker.from_env()
-
+    # bind constant input/output directories to import and export data 
+    # between the external context and the container
     volumes = {
         INPUT_DIR: {'bind': '/computation/input', 'mode': 'rw'},
         OUTPUT_DIR: {'bind': '/computation/output', 'mode': 'rw'}
     }
 
-    print("launching container")
+    print("Running container")
     container = client.containers.run(
         image='computation_template',
         volumes=volumes,

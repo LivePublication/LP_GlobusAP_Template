@@ -37,7 +37,7 @@ itsdangerous==2.1.2
 Jinja2==3.1.2
 jsonschema==3.2.0
 lockfile==0.12.2
-lp-ap-tools==0.1.1
+lp-ap-tools==0.1.4
 MarkupSafe==2.1.2
 mistune==2.0.5
 msgpack==1.0.5
