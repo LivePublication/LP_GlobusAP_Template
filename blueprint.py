@@ -209,25 +209,27 @@ def run_computation(ap_description: ActionProviderDescription,
     }
 
     try: 
-
         print("Executing container")
+        # Image is built and named in app.py
         container = client.containers.run(
-            image='computation_template',
+            image='computation_image:latest',
             volumes=volumes,
             detach=True
         )
-
         # wait for the container to finish
         container.wait()
+
+    except Exception as e:
+        print(e)
     
     finally:
-        
         # If the conatiner is still running, stop it
         if container.status == 'running':
             container.stop()
-
         # Remove the container
         container.remove()
+
+    
 
 
 @aptb.action_status
