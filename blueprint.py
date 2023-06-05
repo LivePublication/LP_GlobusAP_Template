@@ -208,12 +208,26 @@ def run_computation(ap_description: ActionProviderDescription,
         OUTPUT_DIR: {'bind': '/computation/output', 'mode': 'rw'}
     }
 
-    print("Running container")
-    container = client.containers.run(
-        image='computation_template',
-        volumes=volumes,
-        detach=False
-    )
+    try: 
+
+        print("Executing container")
+        container = client.containers.run(
+            image='computation_template',
+            volumes=volumes,
+            detach=True
+        )
+
+        # wait for the container to finish
+        container.wait()
+    
+    finally:
+        
+        # If the conatiner is still running, stop it
+        if container.status == 'running':
+            container.stop()
+
+        # Remove the container
+        container.remove()
 
 
 @aptb.action_status
