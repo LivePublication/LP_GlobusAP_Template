@@ -2,23 +2,19 @@
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
 
-import typing
 
 from cryptography import exceptions
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import (
-    _ED25519_KEY_SIZE,
-    _ED25519_SIG_SIZE,
     Ed25519PrivateKey,
     Ed25519PublicKey,
+    _ED25519_KEY_SIZE,
+    _ED25519_SIG_SIZE,
 )
-
-if typing.TYPE_CHECKING:
-    from cryptography.hazmat.backends.openssl.backend import Backend
 
 
 class _Ed25519PublicKey(Ed25519PublicKey):
-    def __init__(self, backend: "Backend", evp_pkey):
+    def __init__(self, backend, evp_pkey):
         self._backend = backend
         self._evp_pkey = evp_pkey
 
@@ -78,7 +74,7 @@ class _Ed25519PublicKey(Ed25519PublicKey):
 
 
 class _Ed25519PrivateKey(Ed25519PrivateKey):
-    def __init__(self, backend: "Backend", evp_pkey):
+    def __init__(self, backend, evp_pkey):
         self._backend = backend
         self._evp_pkey = evp_pkey
 
@@ -124,7 +120,7 @@ class _Ed25519PrivateKey(Ed25519PrivateKey):
     ) -> bytes:
         if (
             encoding is serialization.Encoding.Raw
-            or format is serialization.PrivateFormat.Raw
+            or format is serialization.PublicFormat.Raw
         ):
             if (
                 format is not serialization.PrivateFormat.Raw

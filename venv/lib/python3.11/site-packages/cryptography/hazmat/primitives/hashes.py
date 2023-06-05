@@ -6,26 +6,25 @@ import abc
 import typing
 
 from cryptography import utils
-from cryptography.exceptions import AlreadyFinalized
+from cryptography.exceptions import (
+    AlreadyFinalized,
+)
 
 
 class HashAlgorithm(metaclass=abc.ABCMeta):
-    @property
-    @abc.abstractmethod
+    @abc.abstractproperty
     def name(self) -> str:
         """
         A string naming this algorithm (e.g. "sha256", "md5").
         """
 
-    @property
-    @abc.abstractmethod
+    @abc.abstractproperty
     def digest_size(self) -> int:
         """
         The size of the resulting digest in bytes.
         """
 
-    @property
-    @abc.abstractmethod
+    @abc.abstractproperty
     def block_size(self) -> typing.Optional[int]:
         """
         The internal block size of the hash function, or None if the hash
@@ -34,8 +33,7 @@ class HashAlgorithm(metaclass=abc.ABCMeta):
 
 
 class HashContext(metaclass=abc.ABCMeta):
-    @property
-    @abc.abstractmethod
+    @abc.abstractproperty
     def algorithm(self) -> HashAlgorithm:
         """
         A HashAlgorithm that will be used by this context.
@@ -67,14 +65,12 @@ class ExtendableOutputFunction(metaclass=abc.ABCMeta):
 
 
 class Hash(HashContext):
-    _ctx: typing.Optional[HashContext]
-
     def __init__(
         self,
         algorithm: HashAlgorithm,
         backend: typing.Any = None,
         ctx: typing.Optional["HashContext"] = None,
-    ) -> None:
+    ):
         if not isinstance(algorithm, HashAlgorithm):
             raise TypeError("Expected instance of hashes.HashAlgorithm.")
         self._algorithm = algorithm
@@ -226,6 +222,7 @@ class BLAKE2b(HashAlgorithm):
     block_size = 128
 
     def __init__(self, digest_size: int):
+
         if digest_size != 64:
             raise ValueError("Digest size must be 64")
 
@@ -243,6 +240,7 @@ class BLAKE2s(HashAlgorithm):
     _min_digest_size = 1
 
     def __init__(self, digest_size: int):
+
         if digest_size != 32:
             raise ValueError("Digest size must be 32")
 

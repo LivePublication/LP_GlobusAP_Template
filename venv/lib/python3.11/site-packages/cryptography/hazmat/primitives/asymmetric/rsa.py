@@ -9,18 +9,29 @@ from math import gcd
 
 from cryptography.hazmat.primitives import _serialization, hashes
 from cryptography.hazmat.primitives._asymmetric import AsymmetricPadding
-from cryptography.hazmat.primitives.asymmetric import utils as asym_utils
+from cryptography.hazmat.primitives.asymmetric import (
+    AsymmetricSignatureContext,
+    AsymmetricVerificationContext,
+    utils as asym_utils,
+)
 
 
 class RSAPrivateKey(metaclass=abc.ABCMeta):
+    @abc.abstractmethod
+    def signer(
+        self, padding: AsymmetricPadding, algorithm: hashes.HashAlgorithm
+    ) -> AsymmetricSignatureContext:
+        """
+        Returns an AsymmetricSignatureContext used for signing data.
+        """
+
     @abc.abstractmethod
     def decrypt(self, ciphertext: bytes, padding: AsymmetricPadding) -> bytes:
         """
         Decrypts the provided ciphertext.
         """
 
-    @property
-    @abc.abstractmethod
+    @abc.abstractproperty
     def key_size(self) -> int:
         """
         The bit length of the public modulus.
@@ -66,13 +77,23 @@ RSAPrivateKeyWithSerialization = RSAPrivateKey
 
 class RSAPublicKey(metaclass=abc.ABCMeta):
     @abc.abstractmethod
+    def verifier(
+        self,
+        signature: bytes,
+        padding: AsymmetricPadding,
+        algorithm: hashes.HashAlgorithm,
+    ) -> AsymmetricVerificationContext:
+        """
+        Returns an AsymmetricVerificationContext used for verifying signatures.
+        """
+
+    @abc.abstractmethod
     def encrypt(self, plaintext: bytes, padding: AsymmetricPadding) -> bytes:
         """
         Encrypts the given plaintext.
         """
 
-    @property
-    @abc.abstractmethod
+    @abc.abstractproperty
     def key_size(self) -> int:
         """
         The bit length of the public modulus.
@@ -288,7 +309,7 @@ def rsa_recover_prime_factors(
     return (p, q)
 
 
-class RSAPrivateNumbers:
+class RSAPrivateNumbers(object):
     def __init__(
         self,
         p: int,
@@ -326,49 +347,22 @@ class RSAPrivateNumbers:
         self._iqmp = iqmp
         self._public_numbers = public_numbers
 
-    @property
-    def p(self) -> int:
-        return self._p
+    p = property(lambda self: self._p)
+    q = property(lambda self: self._q)
+    d = property(lambda self: self._d)
+    dmp1 = property(lambda self: self._dmp1)
+    dmq1 = property(lambda self: self._dmq1)
+    iqmp = property(lambda self: self._iqmp)
+    public_numbers = property(lambda self: self._public_numbers)
 
-    @property
-    def q(self) -> int:
-        return self._q
-
-    @property
-    def d(self) -> int:
-        return self._d
-
-    @property
-    def dmp1(self) -> int:
-        return self._dmp1
-
-    @property
-    def dmq1(self) -> int:
-        return self._dmq1
-
-    @property
-    def iqmp(self) -> int:
-        return self._iqmp
-
-    @property
-    def public_numbers(self) -> "RSAPublicNumbers":
-        return self._public_numbers
-
-    def private_key(
-        self,
-        backend: typing.Any = None,
-        *,
-        unsafe_skip_rsa_key_validation: bool = False,
-    ) -> RSAPrivateKey:
+    def private_key(self, backend: typing.Any = None) -> RSAPrivateKey:
         from cryptography.hazmat.backends.openssl.backend import (
             backend as ossl,
         )
 
-        return ossl.load_rsa_private_numbers(
-            self, unsafe_skip_rsa_key_validation
-        )
+        return ossl.load_rsa_private_numbers(self)
 
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other):
         if not isinstance(other, RSAPrivateNumbers):
             return NotImplemented
 
@@ -382,7 +376,10 @@ class RSAPrivateNumbers:
             and self.public_numbers == other.public_numbers
         )
 
-    def __hash__(self) -> int:
+    def __ne__(self, other):
+        return not self == other
+
+    def __hash__(self):
         return hash(
             (
                 self.p,
@@ -396,7 +393,7 @@ class RSAPrivateNumbers:
         )
 
 
-class RSAPublicNumbers:
+class RSAPublicNumbers(object):
     def __init__(self, e: int, n: int):
         if not isinstance(e, int) or not isinstance(n, int):
             raise TypeError("RSAPublicNumbers arguments must be integers.")
@@ -404,13 +401,8 @@ class RSAPublicNumbers:
         self._e = e
         self._n = n
 
-    @property
-    def e(self) -> int:
-        return self._e
-
-    @property
-    def n(self) -> int:
-        return self._n
+    e = property(lambda self: self._e)
+    n = property(lambda self: self._n)
 
     def public_key(self, backend: typing.Any = None) -> RSAPublicKey:
         from cryptography.hazmat.backends.openssl.backend import (
@@ -419,14 +411,17 @@ class RSAPublicNumbers:
 
         return ossl.load_rsa_public_numbers(self)
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         return "<RSAPublicNumbers(e={0.e}, n={0.n})>".format(self)
 
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other):
         if not isinstance(other, RSAPublicNumbers):
             return NotImplemented
 
         return self.e == other.e and self.n == other.n
 
-    def __hash__(self) -> int:
+    def __ne__(self, other):
+        return not self == other
+
+    def __hash__(self):
         return hash((self.e, self.n))

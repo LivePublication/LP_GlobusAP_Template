@@ -8,7 +8,7 @@ import os
 import sys
 import docker
 
-from lp_ap_tools.lp_ap_tools import LP_artefact, add_lp_params
+from lp_ap_tools.lp_ap_tools import LP_artefact, add_lp_params, print_attributes
 
 from globus_action_provider_tools import (
     ActionProviderDescription,
@@ -58,7 +58,7 @@ ActionProviderInput = add_lp_params(ActionProviderInput)
 
 # Configure Action Provider identity
 description = ActionProviderDescription(
-    globus_auth_scope="https://auth.globus.org/scopes/b92716c9-3ac2-4315-8f48-c33148efed20/action_all",
+    globus_auth_scope="https://auth.globus.org/scopes/b92716c9-3ac2-4315-8f48-c33148efed20/action_provider_operations",
     title="",
     admin_contact="",
     synchronous=True,
@@ -187,6 +187,7 @@ def my_action_run(action_request: ActionRequest, auth: AuthState) -> ActionCallb
     return action_status
 
 # LP artefact decorator for ROcrate management
+# TODO: integrate management_ep with AP params, as a constant
 @LP_artefact(dir_struct=directory_structure)
 def run_computation(ap_description: ActionProviderDescription, 
                     ap_request: ActionRequest, 
@@ -194,7 +195,7 @@ def run_computation(ap_description: ActionProviderDescription,
                     ap_auth: AuthState,
                     ap_apbt: ActionProviderBlueprint,
                     raw_request: request):
-    
+
     # ----------------------------------------------
     # ----------- docker containersation -----------
     # ----------------------------------------------

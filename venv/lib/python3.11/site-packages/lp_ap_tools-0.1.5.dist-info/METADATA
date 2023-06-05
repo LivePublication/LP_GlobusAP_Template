@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: lp-ap-tools
+Version: 0.1.5
+Summary: A python decorator for creating ActionProvider RO-crates within a Globus flow
+Home-page: https://github.com/GusEllerm/lp_tools.git
+Author: Augustus Ellerm
+License: MIT
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+Requires-Dist: rocrate
+Requires-Dist: pydantic
+Requires-Dist: flask (==2.1.3)
+
+A simple python wrapper for generating LivePublication RO-crates during the execution of Globus Action Providers. 
+
+This project depends on a the globus-action-provider-tools library. Install globus-action-provider-tools from https://github.com/GusEllerm/action-provider-tools.git#0.12.0/LP alongside this tool. Note the 0.12.0/LP branch. 
+

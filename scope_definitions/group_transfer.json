@@ -2,7 +2,7 @@
   "scope": {
       "name": "Action Provider Operations",
       "description": "All Operations on My Action Provider",
-      "scope_suffix": "action_all",
+      "scope_suffix": "action_provider_operations",
       "dependent_scopes": [
         {
           "optional": false,

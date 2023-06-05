@@ -6,23 +6,19 @@
 import typing
 
 from cryptography import utils
-from cryptography.exceptions import AlreadyFinalized
+from cryptography.exceptions import (
+    AlreadyFinalized,
+)
 from cryptography.hazmat.primitives import ciphers
 
-if typing.TYPE_CHECKING:
-    from cryptography.hazmat.backends.openssl.cmac import _CMACContext
 
-
-class CMAC:
-    _ctx: typing.Optional["_CMACContext"]
-    _algorithm: ciphers.BlockCipherAlgorithm
-
+class CMAC(object):
     def __init__(
         self,
         algorithm: ciphers.BlockCipherAlgorithm,
         backend: typing.Any = None,
-        ctx: typing.Optional["_CMACContext"] = None,
-    ) -> None:
+        ctx=None,
+    ):
         if not isinstance(algorithm, ciphers.BlockCipherAlgorithm):
             raise TypeError("Expected instance of BlockCipherAlgorithm.")
         self._algorithm = algorithm

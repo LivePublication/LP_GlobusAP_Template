@@ -22,7 +22,6 @@ from cryptography.x509.base import (
     load_der_x509_crl,
     load_der_x509_csr,
     load_pem_x509_certificate,
-    load_pem_x509_certificates,
     load_pem_x509_crl,
     load_pem_x509_csr,
     random_serial_number,
@@ -32,19 +31,19 @@ from cryptography.x509.extensions import (
     AuthorityInformationAccess,
     AuthorityKeyIdentifier,
     BasicConstraints,
-    CertificateIssuer,
-    CertificatePolicies,
     CRLDistributionPoints,
     CRLNumber,
     CRLReason,
+    CertificateIssuer,
+    CertificatePolicies,
     DeltaCRLIndicator,
     DistributionPoint,
     DuplicateExtension,
     ExtendedKeyUsage,
     Extension,
     ExtensionNotFound,
-    Extensions,
     ExtensionType,
+    Extensions,
     FreshestCRL,
     GeneralNames,
     InhibitAnyPolicy,
@@ -58,8 +57,8 @@ from cryptography.x509.extensions import (
     OCSPNonce,
     PolicyConstraints,
     PolicyInformation,
-    PrecertificateSignedCertificateTimestamps,
     PrecertPoison,
+    PrecertificateSignedCertificateTimestamps,
     ReasonFlags,
     SignedCertificateTimestamps,
     SubjectAlternativeName,
@@ -71,13 +70,13 @@ from cryptography.x509.extensions import (
     UserNotice,
 )
 from cryptography.x509.general_name import (
-    DirectoryName,
     DNSName,
+    DirectoryName,
     GeneralName,
     IPAddress,
     OtherName,
-    RegisteredID,
     RFC822Name,
+    RegisteredID,
     UniformResourceIdentifier,
     UnsupportedGeneralNameType,
 )
@@ -88,14 +87,15 @@ from cryptography.x509.name import (
 )
 from cryptography.x509.oid import (
     AuthorityInformationAccessOID,
-    CertificatePoliciesOID,
     CRLEntryExtensionOID,
+    CertificatePoliciesOID,
     ExtendedKeyUsageOID,
     ExtensionOID,
     NameOID,
     ObjectIdentifier,
     SignatureAlgorithmOID,
 )
+
 
 OID_AUTHORITY_INFORMATION_ACCESS = ExtensionOID.AUTHORITY_INFORMATION_ACCESS
 OID_AUTHORITY_KEY_IDENTIFIER = ExtensionOID.AUTHORITY_KEY_IDENTIFIER
@@ -169,7 +169,6 @@ OID_OCSP = AuthorityInformationAccessOID.OCSP
 __all__ = [
     "certificate_transparency",
     "load_pem_x509_certificate",
-    "load_pem_x509_certificates",
     "load_der_x509_certificate",
     "load_pem_x509_csr",
     "load_der_x509_csr",

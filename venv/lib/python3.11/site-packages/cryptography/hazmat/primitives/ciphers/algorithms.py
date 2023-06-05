@@ -8,6 +8,7 @@ from cryptography.hazmat.primitives.ciphers import (
     BlockCipherAlgorithm,
     CipherAlgorithm,
 )
+from cryptography.hazmat.primitives.ciphers.modes import ModeWithNonce
 
 
 def _verify_key_size(algorithm: CipherAlgorithm, key: bytes) -> bytes:
@@ -24,7 +25,7 @@ def _verify_key_size(algorithm: CipherAlgorithm, key: bytes) -> bytes:
     return key
 
 
-class AES(BlockCipherAlgorithm):
+class AES(CipherAlgorithm, BlockCipherAlgorithm):
     name = "AES"
     block_size = 128
     # 512 added to support AES-256-XTS, which uses 512-bit keys
@@ -38,27 +39,7 @@ class AES(BlockCipherAlgorithm):
         return len(self.key) * 8
 
 
-class AES128(BlockCipherAlgorithm):
-    name = "AES"
-    block_size = 128
-    key_sizes = frozenset([128])
-    key_size = 128
-
-    def __init__(self, key: bytes):
-        self.key = _verify_key_size(self, key)
-
-
-class AES256(BlockCipherAlgorithm):
-    name = "AES"
-    block_size = 128
-    key_sizes = frozenset([256])
-    key_size = 256
-
-    def __init__(self, key: bytes):
-        self.key = _verify_key_size(self, key)
-
-
-class Camellia(BlockCipherAlgorithm):
+class Camellia(CipherAlgorithm, BlockCipherAlgorithm):
     name = "camellia"
     block_size = 128
     key_sizes = frozenset([128, 192, 256])
@@ -71,7 +52,7 @@ class Camellia(BlockCipherAlgorithm):
         return len(self.key) * 8
 
 
-class TripleDES(BlockCipherAlgorithm):
+class TripleDES(CipherAlgorithm, BlockCipherAlgorithm):
     name = "3DES"
     block_size = 64
     key_sizes = frozenset([64, 128, 192])
@@ -88,7 +69,7 @@ class TripleDES(BlockCipherAlgorithm):
         return len(self.key) * 8
 
 
-class Blowfish(BlockCipherAlgorithm):
+class Blowfish(CipherAlgorithm, BlockCipherAlgorithm):
     name = "Blowfish"
     block_size = 64
     key_sizes = frozenset(range(32, 449, 8))
@@ -101,17 +82,7 @@ class Blowfish(BlockCipherAlgorithm):
         return len(self.key) * 8
 
 
-_BlowfishInternal = Blowfish
-utils.deprecated(
-    Blowfish,
-    __name__,
-    "Blowfish has been deprecated",
-    utils.DeprecatedIn37,
-    name="Blowfish",
-)
-
-
-class CAST5(BlockCipherAlgorithm):
+class CAST5(CipherAlgorithm, BlockCipherAlgorithm):
     name = "CAST5"
     block_size = 64
     key_sizes = frozenset(range(40, 129, 8))
@@ -122,16 +93,6 @@ class CAST5(BlockCipherAlgorithm):
     @property
     def key_size(self) -> int:
         return len(self.key) * 8
-
-
-_CAST5Internal = CAST5
-utils.deprecated(
-    CAST5,
-    __name__,
-    "CAST5 has been deprecated",
-    utils.DeprecatedIn37,
-    name="CAST5",
-)
 
 
 class ARC4(CipherAlgorithm):
@@ -146,7 +107,7 @@ class ARC4(CipherAlgorithm):
         return len(self.key) * 8
 
 
-class IDEA(BlockCipherAlgorithm):
+class IDEA(CipherAlgorithm):
     name = "IDEA"
     block_size = 64
     key_sizes = frozenset([128])
@@ -159,17 +120,7 @@ class IDEA(BlockCipherAlgorithm):
         return len(self.key) * 8
 
 
-_IDEAInternal = IDEA
-utils.deprecated(
-    IDEA,
-    __name__,
-    "IDEA has been deprecated",
-    utils.DeprecatedIn37,
-    name="IDEA",
-)
-
-
-class SEED(BlockCipherAlgorithm):
+class SEED(CipherAlgorithm, BlockCipherAlgorithm):
     name = "SEED"
     block_size = 128
     key_sizes = frozenset([128])
@@ -182,17 +133,7 @@ class SEED(BlockCipherAlgorithm):
         return len(self.key) * 8
 
 
-_SEEDInternal = SEED
-utils.deprecated(
-    SEED,
-    __name__,
-    "SEED has been deprecated",
-    utils.DeprecatedIn37,
-    name="SEED",
-)
-
-
-class ChaCha20(CipherAlgorithm):
+class ChaCha20(CipherAlgorithm, ModeWithNonce):
     name = "ChaCha20"
     key_sizes = frozenset([256])
 
@@ -214,7 +155,7 @@ class ChaCha20(CipherAlgorithm):
         return len(self.key) * 8
 
 
-class SM4(BlockCipherAlgorithm):
+class SM4(CipherAlgorithm, BlockCipherAlgorithm):
     name = "SM4"
     block_size = 128
     key_sizes = frozenset([128])
