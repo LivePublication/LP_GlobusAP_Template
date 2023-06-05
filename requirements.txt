@@ -14,7 +14,7 @@ charset-normalizer==3.1.0
 click==8.1.3
 colorama==0.4.6
 commonmark==0.9.1
-cryptography==40.0.2
+cryptography==36.0.2
 dill==0.3.5.1
 docker==6.1.2
 fair-research-login==0.3.0
@@ -28,6 +28,7 @@ gladier==0.8.4
 gladier-tools==0.4.4
 globus-action-provider-tools @ git+https://github.com/GusEllerm/action-provider-tools@5413e506e72ffecc1712e79d4f30d251119cd8ae
 globus-automate-client==0.16.1.post1
+globus-cli==3.13.0
 globus-sdk==3.19.0
 graphviz==0.12
 gxformat2==0.18.0
@@ -35,9 +36,10 @@ idna==3.4
 isodate==0.6.1
 itsdangerous==2.1.2
 Jinja2==3.1.2
+jmespath==1.0.1
 jsonschema==3.2.0
 lockfile==0.12.2
-lp-ap-tools==0.1.4
+lp-ap-tools==0.1.5
 MarkupSafe==2.1.2
 mistune==2.0.5
 msgpack==1.0.5
