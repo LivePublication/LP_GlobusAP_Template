@@ -40,15 +40,15 @@ directory_structure = {"input": INPUT_DIR, "output": OUTPUT_DIR, "method": METHO
 
 class ActionProviderInput(BaseModel):
     # Defines the required input for the Action Provider (E.G. directories to process)
-    example: str = Field(
-        ..., title="Some required input", description="A useful description"
+    input_data: str = Field(
+        ..., title="Input Data", description="Lines of text data to be classified."
     )
     
     # Defines the returned dialog when querying the Action Provider
     class Config:
         schema_extra = {
-            "example": {
-                "example": "an example of the variable"
+            "input_data": {
+                "input_data": "input/input_data.txt"
                 }
             }
 
@@ -58,14 +58,14 @@ ActionProviderInput = add_lp_params(ActionProviderInput)
 
 # Configure Action Provider identity
 description = ActionProviderDescription(
-    globus_auth_scope="https://auth.globus.org/scopes/b92716c9-3ac2-4315-8f48-c33148efed20/action_provider_operations",
+    globus_auth_scope="https://auth.globus.org/scopes/1ff4cb73-61dc-404b-994b-679c8e18c36d/action_provider_operations",
     title="",
     admin_contact="",
     synchronous=True,
     input_schema=ActionProviderInput,
     api_version="1.0",
     subtitle="",
-    description="An example ActionProvider that uses a container to copy a file from input to output",
+    description="",
     keywords=[""],
     visible_to=["public"],
     runnable_by=["all_authenticated_users"],
@@ -74,9 +74,9 @@ description = ActionProviderDescription(
 
 # Configure name, url and assign description
 aptb = ActionProviderBlueprint(
-    name="example",
+    name="",
     import_name=__name__,
-    url_prefix="/example",
+    url_prefix="",
     provider_description=description
 )
 
@@ -187,7 +187,6 @@ def my_action_run(action_request: ActionRequest, auth: AuthState) -> ActionCallb
     return action_status
 
 # LP artefact decorator for ROcrate management
-# TODO: integrate management_ep with AP params, as a constant
 @LP_artefact(dir_struct=directory_structure)
 def run_computation(ap_description: ActionProviderDescription, 
                     ap_request: ActionRequest, 
@@ -214,9 +213,11 @@ def run_computation(ap_description: ActionProviderDescription,
         container = client.containers.run(
             image='computation_image:latest',
             volumes=volumes,
+            command=[ap_request.body["input_data"]],
             detach=True
-        )
+)
         # wait for the container to finish
+        print(container)
         container.wait()
 
     except Exception as e:
@@ -228,8 +229,6 @@ def run_computation(ap_description: ActionProviderDescription,
             container.stop()
         # Remove the container
         container.remove()
-
-    
 
 
 @aptb.action_status
