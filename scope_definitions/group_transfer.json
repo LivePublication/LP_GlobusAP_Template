@@ -15,7 +15,7 @@
           "scope": "80fa5a88-ae26-4db7-be3a-c5f4cf4ac8d2"
        }
       ],
-      "advertised": false,
+      "advertised": true,
       "allow_refresh_tokens": true
   }
 }

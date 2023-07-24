@@ -10,7 +10,7 @@
           "scope": "73320ffe-4cb4-4b25-a0a3-83d53d59ce4f"
        }
       ],
-      "advertised": false,
+      "advertised": true,
       "allow_refresh_tokens": true
   }
 }
