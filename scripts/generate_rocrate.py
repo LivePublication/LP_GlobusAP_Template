@@ -16,9 +16,10 @@ DESCRIPTION = (
     "It provides a scaffold (structure, configuration, and example components) for "
     "operationalizing the thesis provenance model contributions."
 )
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 LICENSE_URL = "https://spdx.org/licenses/Apache-2.0"
 REPO_URL = "https://github.com/LivePublication/LP_GlobusAP_Template"
+DOI_URL = "https://doi.org/10.5281/zenodo.18255331"
 
 
 def main() -> None:
@@ -32,6 +33,7 @@ def main() -> None:
     root["license"] = LICENSE_URL
     root["version"] = VERSION
     root["datePublished"] = datetime.now(timezone.utc).isoformat()
+    root["identifier"] = DOI_URL
 
     author = Person(
         crate,
@@ -51,6 +53,7 @@ def main() -> None:
             "version": VERSION,
             "codeRepository": REPO_URL,
             "programmingLanguage": "Python",
+            "identifier": DOI_URL,
         },
     )
     crate.add(software)

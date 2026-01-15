@@ -1,4 +1,5 @@
-# LP_GlobusAP_Template 
+# LP_GlobusAP_Template [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18255332.svg)](https://doi.org/10.5281/zenodo.18255332)
+
 
 ## What this repository does
 
@@ -59,7 +60,7 @@ curl -X POST \
 
 ## How to cite
 - GitHub: https://github.com/LivePublication/LP_GlobusAP_Template
-- Zenodo DOI: (minted after release)
+- Zenodo DOI: https://doi.org/10.5281/zenodo.18255331
 
 ## License
 Apache-2.0. See `LICENSE`.

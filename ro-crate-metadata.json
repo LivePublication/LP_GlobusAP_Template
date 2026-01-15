@@ -4,7 +4,7 @@
         {
             "@id": "./",
             "@type": "Dataset",
-            "datePublished": "2026-01-15T10:09:16.785443+00:00",
+            "datePublished": "2026-01-15T10:27:08.794562+00:00",
             "description": "Template repository for building Globus Action Providers in the LivePublication ecosystem, intended to support step-level provenance capture and Distributed Step Crate (DSC) generation patterns in Globus-based distributed execution environments. It provides a scaffold (structure, configuration, and example components) for operationalizing the thesis provenance model contributions.",
             "hasPart": [
                 {
@@ -59,9 +59,6 @@
                     "@id": "output/test.txt"
                 },
                 {
-                    "@id": "crates/"
-                },
-                {
                     "@id": "method_resources/"
                 },
                 {
@@ -74,12 +71,13 @@
                     "@id": "scope_definitions/group_transfer.json"
                 }
             ],
+            "identifier": "https://doi.org/10.5281/zenodo.18255331",
             "license": "https://spdx.org/licenses/Apache-2.0",
             "mainEntity": {
-                "@id": "#software"
+                "@id": "software"
             },
             "name": "LP_GlobusAP_Template (Thesis Artifact)",
-            "version": "1.0.0"
+            "version": "1.0.1"
         },
         {
             "@id": "ro-crate-metadata.json",
@@ -97,17 +95,18 @@
             "name": "Augustus Ellerm"
         },
         {
-            "@id": "#software",
+            "@id": "software",
             "@type": "SoftwareSourceCode",
             "author": {
                 "@id": "https://orcid.org/0000-0001-8260-231X"
             },
             "codeRepository": "https://github.com/LivePublication/LP_GlobusAP_Template",
             "description": "Template repository for building Globus Action Providers in the LivePublication ecosystem, intended to support step-level provenance capture and Distributed Step Crate (DSC) generation patterns in Globus-based distributed execution environments. It provides a scaffold (structure, configuration, and example components) for operationalizing the thesis provenance model contributions.",
+            "identifier": "https://doi.org/10.5281/zenodo.18255331",
             "license": "https://spdx.org/licenses/Apache-2.0",
             "name": "LP_GlobusAP_Template (Thesis Artifact)",
             "programmingLanguage": "Python",
-            "version": "1.0.0"
+            "version": "1.0.1"
         },
         {
             "@id": "README.md",
@@ -176,10 +175,6 @@
         {
             "@id": "output/test.txt",
             "@type": "File"
-        },
-        {
-            "@id": "crates/",
-            "@type": "Dataset"
         },
         {
             "@id": "method_resources/",

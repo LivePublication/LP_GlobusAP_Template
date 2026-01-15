@@ -1,8 +1,9 @@
 cff-version: 1.2.0
 title: "LP_GlobusAP_Template (Thesis Artifact)"
 message: "If you use this software, please cite it as below."
-version: "1.0.0"
+version: "1.0.1"
 license: Apache-2.0
+doi: 10.5281/zenodo.18255331
 authors:
   - family-names: Ellerm
     given-names: Augustus

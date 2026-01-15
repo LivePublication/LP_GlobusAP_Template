@@ -8,7 +8,7 @@ import yaml
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 
 def fail(message: str) -> None:
@@ -47,14 +47,14 @@ def validate_zenodo() -> None:
         if "http" in orcid or "orcid.org" in orcid:
             fail(".zenodo.json ORCID must be bare digits (no URL)")
     if data.get("version") != VERSION:
-        fail(".zenodo.json version must be 1.0.0")
+        fail(".zenodo.json version must be 1.0.1")
 
 
 def validate_codemeta() -> None:
     path = REPO_ROOT / "codemeta.json"
     data = load_json(path)
     if data.get("version") != VERSION:
-        fail("codemeta.json version must be 1.0.0")
+        fail("codemeta.json version must be 1.0.1")
 
 
 def validate_citation() -> None:
@@ -63,7 +63,7 @@ def validate_citation() -> None:
     if not isinstance(data, dict):
         fail("CITATION.cff is not valid YAML mapping")
     if data.get("version") != VERSION:
-        fail("CITATION.cff version must be 1.0.0")
+        fail("CITATION.cff version must be 1.0.1")
 
 
 def validate_rocrate() -> None:
@@ -119,7 +119,7 @@ def print_checklist() -> None:
     print("- Confirm the quickstart steps are accurate for your deployment.")
     print("- Confirm the Apache-2.0 license matches the intended licensing.")
     print("- Confirm Zenodo GitHub integration is enabled for this repository.")
-    print("- Create a GitHub release/tag v1.0.0 for DOI minting.")
+    print("- Create a GitHub release/tag v1.0.1 for DOI minting.")
     print("- After DOI minting, update metadata files with the DOI and release a patch.")
 
 
