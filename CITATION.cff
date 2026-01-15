@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+title: "LP_GlobusAP_Template (Thesis Artifact)"
+message: "If you use this software, please cite it as below."
+version: "1.0.0"
+license: Apache-2.0
+authors:
+  - family-names: Ellerm
+    given-names: Augustus
+    orcid: https://orcid.org/0000-0001-8260-231X
+abstract: "Template repository for building Globus Action Providers in the LivePublication ecosystem, intended to support step-level provenance capture and Distributed Step Crate (DSC) generation patterns in Globus-based distributed execution environments. It provides a scaffold (structure, configuration, and example components) for operationalizing the thesis provenance model contributions."
+repository-code: https://github.com/LivePublication/LP_GlobusAP_Template
+url: https://github.com/LivePublication/LP_GlobusAP_Template
+

@@ -1,0 +1,32 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "LP_GlobusAP_Template (Thesis Artifact)",
+  "description": "Template repository for building Globus Action Providers in the LivePublication ecosystem, intended to support step-level provenance capture and Distributed Step Crate (DSC) generation patterns in Globus-based distributed execution environments. It provides a scaffold (structure, configuration, and example components) for operationalizing the thesis provenance model contributions.",
+  "codeRepository": "https://github.com/LivePublication/LP_GlobusAP_Template",
+  "license": "https://spdx.org/licenses/Apache-2.0",
+  "version": "1.0.0",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Augustus",
+      "familyName": "Ellerm",
+      "identifier": "https://orcid.org/0000-0001-8260-231X"
+    }
+  ],
+  "keywords": [
+    "LivePublication",
+    "provenance",
+    "RO-Crate",
+    "Globus",
+    "Globus Actions",
+    "Action Provider",
+    "template",
+    "Distributed Step Crate",
+    "DSC"
+  ],
+  "programmingLanguage": [
+    "Python"
+  ]
+}
+

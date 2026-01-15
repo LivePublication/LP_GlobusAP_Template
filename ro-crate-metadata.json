@@ -1,0 +1,201 @@
+{
+    "@context": "https://w3id.org/ro/crate/1.1/context",
+    "@graph": [
+        {
+            "@id": "./",
+            "@type": "Dataset",
+            "datePublished": "2026-01-15T10:09:16.785443+00:00",
+            "description": "Template repository for building Globus Action Providers in the LivePublication ecosystem, intended to support step-level provenance capture and Distributed Step Crate (DSC) generation patterns in Globus-based distributed execution environments. It provides a scaffold (structure, configuration, and example components) for operationalizing the thesis provenance model contributions.",
+            "hasPart": [
+                {
+                    "@id": "README.md"
+                },
+                {
+                    "@id": "LICENSE"
+                },
+                {
+                    "@id": ".zenodo.json"
+                },
+                {
+                    "@id": "codemeta.json"
+                },
+                {
+                    "@id": "CITATION.cff"
+                },
+                {
+                    "@id": "requirements.txt"
+                },
+                {
+                    "@id": "app.py"
+                },
+                {
+                    "@id": "blueprint.py"
+                },
+                {
+                    "@id": "backend.py"
+                },
+                {
+                    "@id": "config.py"
+                },
+                {
+                    "@id": "scripts/"
+                },
+                {
+                    "@id": "scripts/generate_rocrate.py"
+                },
+                {
+                    "@id": "scripts/validate_metadata.py"
+                },
+                {
+                    "@id": "input/"
+                },
+                {
+                    "@id": "input/test.txt"
+                },
+                {
+                    "@id": "output/"
+                },
+                {
+                    "@id": "output/test.txt"
+                },
+                {
+                    "@id": "crates/"
+                },
+                {
+                    "@id": "method_resources/"
+                },
+                {
+                    "@id": "scope_definitions/"
+                },
+                {
+                    "@id": "scope_definitions/group.json"
+                },
+                {
+                    "@id": "scope_definitions/group_transfer.json"
+                }
+            ],
+            "license": "https://spdx.org/licenses/Apache-2.0",
+            "mainEntity": {
+                "@id": "#software"
+            },
+            "name": "LP_GlobusAP_Template (Thesis Artifact)",
+            "version": "1.0.0"
+        },
+        {
+            "@id": "ro-crate-metadata.json",
+            "@type": "CreativeWork",
+            "about": {
+                "@id": "./"
+            },
+            "conformsTo": {
+                "@id": "https://w3id.org/ro/crate/1.1"
+            }
+        },
+        {
+            "@id": "https://orcid.org/0000-0001-8260-231X",
+            "@type": "Person",
+            "name": "Augustus Ellerm"
+        },
+        {
+            "@id": "#software",
+            "@type": "SoftwareSourceCode",
+            "author": {
+                "@id": "https://orcid.org/0000-0001-8260-231X"
+            },
+            "codeRepository": "https://github.com/LivePublication/LP_GlobusAP_Template",
+            "description": "Template repository for building Globus Action Providers in the LivePublication ecosystem, intended to support step-level provenance capture and Distributed Step Crate (DSC) generation patterns in Globus-based distributed execution environments. It provides a scaffold (structure, configuration, and example components) for operationalizing the thesis provenance model contributions.",
+            "license": "https://spdx.org/licenses/Apache-2.0",
+            "name": "LP_GlobusAP_Template (Thesis Artifact)",
+            "programmingLanguage": "Python",
+            "version": "1.0.0"
+        },
+        {
+            "@id": "README.md",
+            "@type": "File"
+        },
+        {
+            "@id": "LICENSE",
+            "@type": "File"
+        },
+        {
+            "@id": ".zenodo.json",
+            "@type": "File"
+        },
+        {
+            "@id": "codemeta.json",
+            "@type": "File"
+        },
+        {
+            "@id": "CITATION.cff",
+            "@type": "File"
+        },
+        {
+            "@id": "requirements.txt",
+            "@type": "File"
+        },
+        {
+            "@id": "app.py",
+            "@type": "File"
+        },
+        {
+            "@id": "blueprint.py",
+            "@type": "File"
+        },
+        {
+            "@id": "backend.py",
+            "@type": "File"
+        },
+        {
+            "@id": "config.py",
+            "@type": "File"
+        },
+        {
+            "@id": "scripts/",
+            "@type": "Dataset"
+        },
+        {
+            "@id": "scripts/generate_rocrate.py",
+            "@type": "File"
+        },
+        {
+            "@id": "scripts/validate_metadata.py",
+            "@type": "File"
+        },
+        {
+            "@id": "input/",
+            "@type": "Dataset"
+        },
+        {
+            "@id": "input/test.txt",
+            "@type": "File"
+        },
+        {
+            "@id": "output/",
+            "@type": "Dataset"
+        },
+        {
+            "@id": "output/test.txt",
+            "@type": "File"
+        },
+        {
+            "@id": "crates/",
+            "@type": "Dataset"
+        },
+        {
+            "@id": "method_resources/",
+            "@type": "Dataset"
+        },
+        {
+            "@id": "scope_definitions/",
+            "@type": "Dataset"
+        },
+        {
+            "@id": "scope_definitions/group.json",
+            "@type": "File"
+        },
+        {
+            "@id": "scope_definitions/group_transfer.json",
+            "@type": "File"
+        }
+    ]
+}
