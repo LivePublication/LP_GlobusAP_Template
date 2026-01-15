@@ -1,5 +1,5 @@
 {
-  "title": "LP_GlobusAP_Template (Thesis Artifact)",
+  "title": "LivePublication Action Provider Template",
   "description": "Template repository for building Globus Action Providers in the LivePublication ecosystem, intended to support step-level provenance capture and Distributed Step Crate (DSC) generation patterns in Globus-based distributed execution environments. It provides a scaffold (structure, configuration, and example components) for operationalizing the thesis provenance model contributions.",
   "upload_type": "software",
   "version": "1.0.0",
