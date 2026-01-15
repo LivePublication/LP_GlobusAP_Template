@@ -1,2 +1,0 @@
-lp_ap_tools
-tests
